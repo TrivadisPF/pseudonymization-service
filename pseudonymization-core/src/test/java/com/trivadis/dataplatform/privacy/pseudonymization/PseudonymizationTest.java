@@ -28,7 +28,7 @@ public class PseudonymizationTest {
     public void setup() {
         EncryptionAESGCMSIV aesgcmsiv = new EncryptionAESGCMSIV(DECODED_SECRET_KEY, DECODED_NONCE_KEY, NONCE_BEGIN_POS, NONCE_END_POS);
         Cache<String, String> cache = CacheBuilder.newBuilder()
-                .maximumSize(Optional.ofNullable(System.getenv("CACHE_SIZE")).map(Integer::parseInt).orElse(DEFAULT_CACHE_SIZE))
+                .maximumSize(Optional.ofNullable(System.getenv("PSEUDONYMIZATION_CACHE_SIZE")).map(Integer::parseInt).orElse(DEFAULT_CACHE_SIZE))
                 .softValues()
                 .build();
         pseudonymization = new Pseudonymization(aesgcmsiv, cache);
