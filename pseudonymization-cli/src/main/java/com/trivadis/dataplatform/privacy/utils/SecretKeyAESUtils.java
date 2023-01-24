@@ -4,6 +4,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Random;
 
 public class SecretKeyAESUtils {
 
@@ -19,6 +20,12 @@ public class SecretKeyAESUtils {
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(secureRandomKeyBytes);
         return new SecretKeySpec(secureRandomKeyBytes, CIPHER).getEncoded();
+    }
+
+    public static int nounceStart(int min,int max){
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
     }
 
     /**
