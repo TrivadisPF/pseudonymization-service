@@ -20,24 +20,21 @@ public class Vault {
         Scanner reader = new Scanner(System.in);  // Reading from System.in
         System.out.println("Enter Authentification Token: ");
         String token = reader.next();
-        reader.close();
-
-        // Authenticate
         VaultTemplate vaultTemplate = new VaultTemplate(
                 vaultEndpoint,
                 new TokenAuthentication(token));
         System.out.println("Access granted!");
-        /*
-        Scanner path = new Scanner(System.in);  // Reading from System.in
-        System.out.println("Enter key path: ");
-        String secretPath = path.next();
-        path.close();
-        */
-        String secretPath = "TestSecret2";
+        //System.out.println("Enter path for secret");
+        //String secretPath = reader.next();
+        String secretPath = "secret";
+        System.out.println("Enter name for secret");
+        String secretName = reader.next();
+        reader.close();
+
 
         Versioned.Metadata createResponse = vaultTemplate
-                .opsForVersionedKeyValue("secret")
-                .put(secretPath, keyPair);
+                .opsForVersionedKeyValue(secretPath)
+                .put(secretName, keyPair);
 
         System.out.println("Secret written successfully.");
         return 1;

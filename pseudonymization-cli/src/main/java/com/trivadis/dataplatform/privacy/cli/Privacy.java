@@ -18,7 +18,9 @@ import static com.trivadis.dataplatform.privacy.utils.Vault.vaultWriter;
 
 @CommandLine.Command(name = "privacy", mixinStandardHelpOptions = true, version = "privacy 1.0",
         description = "xxxxxx")
+
 public class Privacy implements Callable<Integer> {
+
 
     //private Pair<Integer,Integer> generateNoncePosition() {
     //    return null;
@@ -36,27 +38,20 @@ public class Privacy implements Callable<Integer> {
 
         // 1. Create the AES secret key of 256bit
         byte[] secretKey = generateKey(secretKeyLength);
-        System.out.println("The secret key is: ");
         String secretKeyEncoded = Base64.getEncoder().encodeToString(secretKey);
         keyPair.put("secretKey",secretKeyEncoded);
-        System.out.println(secretKeyEncoded);
 
         // 2. Create the HMAC_SHA256 secret key (nonce) of 64bit
         byte[] nonceKey = generateKey(nonceKeyLength);
-        System.out.println("The nounce is: ");
         String nonceKeyEncoded = Base64.getEncoder().encodeToString(nonceKey);
         keyPair.put("nonceKey",nonceKeyEncoded);
-        System.out.println(nonceKeyEncoded);
 
         // 3. Generate the Nonce position (begin and end)
         int nonceBeginPos = nounceStart(nounceMin,nounceMax);
-        int nonceEndPos = nonceBeginPos + 12;
-        System.out.println("The nounce start is: ");
-        System.out.println(nonceBeginPos);
         keyPair.put("nonceBeginPos",String.valueOf(nonceBeginPos));
-        System.out.println("The nounce end is: ");
+
+        int nonceEndPos = nonceBeginPos + 12;
         keyPair.put("nonceEndPos",String.valueOf(nonceEndPos));
-        System.out.println(nonceEndPos);
 
         int keyToVault = vaultWriter(keyPair);
 
