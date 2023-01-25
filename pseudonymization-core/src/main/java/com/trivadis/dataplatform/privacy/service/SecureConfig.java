@@ -8,13 +8,13 @@ import java.util.Base64;
 @AllArgsConstructor
 @Data
 public class SecureConfig {
-    private String secureKey;
+    private String secretKey;
     private String nonceKey;
     private Integer nonceBeginPos;
     private Integer noceEndPos;
 
-    public byte[] getSecureKeyDecoded() {
-        return Base64.getDecoder().decode(this.secureKey);
+    public byte[] getSecretKeyDecoded() {
+        return Base64.getDecoder().decode(this.secretKey);
     }
 
     public byte[] getNonceKeyDecoded() {
