@@ -14,7 +14,7 @@ public class PseudonymizerImpl implements Pseudonymizer {
     private Pseudonymization pseudonymization = null;
 
     public PseudonymizerImpl(SecureConfig secureConfig) {
-        EncryptionAESGCMSIV aesgcmsiv = new EncryptionAESGCMSIV(secureConfig.getSecretKeyDecoded(), secureConfig.getNonceKeyDecoded(), secureConfig.getNonceBeginPos(), secureConfig.getNoceEndPos());
+        EncryptionAESGCMSIV aesgcmsiv = new EncryptionAESGCMSIV(secureConfig.getSecretKeyDecoded(), secureConfig.getNonceKeyDecoded(), secureConfig.getNonceBeginPos(), secureConfig.getNonceEndPos());
         cache = CacheBuilder.newBuilder()
                 .maximumSize(Optional.ofNullable(System.getenv("PSEUDONYMIZATION_CACHE_SIZE")).map(Integer::parseInt).orElse(DEFAULT_CACHE_SIZE))
                 .softValues()

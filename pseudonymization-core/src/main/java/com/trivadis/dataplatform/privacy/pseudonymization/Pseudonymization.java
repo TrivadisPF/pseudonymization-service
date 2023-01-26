@@ -1,8 +1,7 @@
 package com.trivadis.dataplatform.privacy.pseudonymization;
 
-import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
-import com.trivadis.dataplatform.privacy.utils.PseudonymRequest;
 import com.google.common.cache.Cache;
+import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
