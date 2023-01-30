@@ -1,4 +1,4 @@
-package com.trivadis.dataplatform.privacy.pseudonymization;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption;
 
 import com.google.common.cache.Cache;
 import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
@@ -43,18 +43,20 @@ public class Pseudonymization {
      */
     public String pseudonymize(String identifier, Boolean deterministic) {
         String pseudonym = null;
-        try {
-            if (deterministic) {
-                pseudonym = cache.getIfPresent(identifier);
-                if (pseudonym == null) {
-                    pseudonym = Base64.getEncoder().encodeToString(aesgcmsiv.encrypt(identifier.getBytes(StandardCharsets.UTF_8), "".getBytes(), true));
-                    cache.put(identifier, pseudonym);
+        if (identifier != null) {
+            try {
+                if (deterministic) {
+                    pseudonym = cache.getIfPresent(identifier);
+                    if (pseudonym == null) {
+                        pseudonym = Base64.getEncoder().encodeToString(aesgcmsiv.encrypt(identifier.getBytes(StandardCharsets.UTF_8), "".getBytes(), true));
+                        cache.put(identifier, pseudonym);
+                    }
+                } else {
+                    pseudonym = Base64.getEncoder().encodeToString(aesgcmsiv.encrypt(identifier.getBytes(StandardCharsets.UTF_8), "".getBytes()));
                 }
-            } else {
-                pseudonym = Base64.getEncoder().encodeToString(aesgcmsiv.encrypt(identifier.getBytes(StandardCharsets.UTF_8), "".getBytes()));
+            } catch (Exception e) {
+                log.log(Level.parse("SEVERE"), "Error during pseudonymisation, setting null as result: " + identifier + e);
             }
-        } catch (Exception e) {
-            log.log(Level.parse("SEVERE"),"Error during pseudonymisation, setting null as result: " + identifier + e);
         }
         return pseudonym;
     }

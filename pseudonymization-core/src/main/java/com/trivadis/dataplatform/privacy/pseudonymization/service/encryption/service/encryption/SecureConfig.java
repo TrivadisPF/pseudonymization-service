@@ -1,4 +1,4 @@
-package com.trivadis.dataplatform.privacy.service;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption;
 
 import java.util.Base64;
 

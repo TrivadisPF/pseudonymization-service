@@ -1,4 +1,4 @@
-package com.trivadis.dataplatform.privacy.pseudonymization;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption;
 
 import com.google.common.cache.Cache;
 import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;

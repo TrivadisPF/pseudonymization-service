@@ -1,11 +1,10 @@
 package com.trivadis.dataplatform.privacy;
 
-import com.trivadis.dataplatform.privacy.service.Pseudonymizer;
-import com.trivadis.dataplatform.privacy.service.PseudonymizerImpl;
-import com.trivadis.dataplatform.privacy.service.SecureConfig;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.PseudonymizerImpl;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.SecureConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component

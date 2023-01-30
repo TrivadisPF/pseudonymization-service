@@ -1,9 +1,9 @@
-package com.trivadis.dataplatform.privacy.service;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
-import com.trivadis.dataplatform.privacy.pseudonymization.Pseudonymization;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
 
 import java.util.Optional;
 
@@ -31,7 +31,18 @@ public class PseudonymizerImpl implements Pseudonymizer {
     }
 
     @Override
+    public String pseudonymize(String identifier, boolean deterministic) {
+        return pseudonymization.pseudonymize(identifier, deterministic);
+    }
+
+    @Override
     public String[] pseudonymize(String[] identifiers) {
         return pseudonymization.pseudonymize(identifiers, true);
     }
+
+    @Override
+    public String[] pseudonymize(String[] identifiers, boolean deterministic) {
+        return pseudonymization.pseudonymize(identifiers, deterministic);
+    }
+
 }

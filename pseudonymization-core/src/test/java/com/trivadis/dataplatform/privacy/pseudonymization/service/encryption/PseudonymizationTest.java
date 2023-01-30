@@ -1,8 +1,9 @@
-package com.trivadis.dataplatform.privacy.pseudonymization;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.Pseudonymization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,23 @@ public class PseudonymizationTest {
         String pseudonym = pseudonymization.pseudonymize(identifier, true);
         assertEquals("ZTRmMjYyOTY3MmZlOfCfTky6D1AJ3cqHoniBnuf9X6NVU2d/ggRkTLzhlOryU+A=", pseudonym);
     }
+
+    @Test
+    public void pseudonymizeSingleIdentifierDeterministic() {
+        String identifier = "Hello Data Privacy!";
+        String pseudonym1 = pseudonymization.pseudonymize(identifier, true);
+        String pseudonym2 = pseudonymization.pseudonymize(identifier, true);
+        assertEquals(pseudonym1, pseudonym2);
+    }
+
+    @Test
+    public void pseudonymizeSingleIdentifierNotDeterministic() {
+        String identifier = "Hello Data Privacy!";
+        String pseudonym1 = pseudonymization.pseudonymize(identifier, false);
+        String pseudonym2 = pseudonymization.pseudonymize(identifier, false);
+        assertNotEquals(pseudonym1, pseudonym2);
+    }
+
 
     @Test
     public void pseudonymizeMultipleIdentifiers() {
