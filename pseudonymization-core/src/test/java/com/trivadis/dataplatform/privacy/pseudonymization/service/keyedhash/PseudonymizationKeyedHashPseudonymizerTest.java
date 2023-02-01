@@ -1,15 +1,14 @@
 package com.trivadis.dataplatform.privacy.pseudonymization.service.keyedhash;
 
 import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.keyedhash.PseudonymizerImpl;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.keyedhash.KeyedHashPseudonymizer;
 import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.keyedhash.SecureConfig;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PseudonymizerImplTest {
+public class PseudonymizationKeyedHashPseudonymizerTest {
     private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";
 
     private Pseudonymizer pseudonymizer;
@@ -17,7 +16,7 @@ public class PseudonymizerImplTest {
     @BeforeEach
     public void setup() {
         SecureConfig secureConfig = new SecureConfig(SECRET_KEY);
-        pseudonymizer = new PseudonymizerImpl(secureConfig);
+        pseudonymizer = new KeyedHashPseudonymizer(secureConfig, true);
     }
 
     @Test
@@ -43,6 +42,14 @@ public class PseudonymizerImplTest {
         assertNotEquals(pseudonym1, pseudonym2);
     }
 
+    @Test
+    public void pseudonymizeSingleIdentifierNoCaching() {
+        SecureConfig secureConfig = new SecureConfig(SECRET_KEY);
+        pseudonymizer = new KeyedHashPseudonymizer(secureConfig, false);
+
+        String identifier = "Hello Data Privacy!";
+        String pseudonym = pseudonymizer.pseudonymize(identifier, true);
+    }
 
     @Test
     public void pseudonymizeMultipleIdentifiers() {

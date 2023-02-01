@@ -1,69 +1,64 @@
 package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.Pseudonymization;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.EncryptionPseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.SecureConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Base64;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PseudonymizationTest {
-
+public class PseudonymizationEncryptionPseudonymizerTest {
     private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";
-    private static final byte[] DECODED_SECRET_KEY = Base64.getDecoder().decode(SECRET_KEY);
     private static final String NONCE_KEY = "2hfbSR4JxbE=";
-    private static final byte[] DECODED_NONCE_KEY = Base64.getDecoder().decode(NONCE_KEY);
     private static final Integer NONCE_BEGIN_POS = 9;
     private static final Integer NONCE_END_POS = 21;
 
-    private static final Integer DEFAULT_CACHE_SIZE=10;
-
-    private Pseudonymization pseudonymization;
+    private Pseudonymizer pseudonymizer;
 
     @BeforeEach
     public void setup() {
-        EncryptionAESGCMSIV aesgcmsiv = new EncryptionAESGCMSIV(DECODED_SECRET_KEY, DECODED_NONCE_KEY, NONCE_BEGIN_POS, NONCE_END_POS);
-        Cache<String, String> cache = CacheBuilder.newBuilder()
-                .maximumSize(Optional.ofNullable(System.getenv("PSEUDONYMIZATION_CACHE_SIZE")).map(Integer::parseInt).orElse(DEFAULT_CACHE_SIZE))
-                .softValues()
-                .build();
-        pseudonymization = new Pseudonymization(aesgcmsiv, cache);
+        SecureConfig secureConfig = new SecureConfig(SECRET_KEY, NONCE_KEY, NONCE_BEGIN_POS, NONCE_END_POS);
+        pseudonymizer = new EncryptionPseudonymizer(secureConfig);
     }
-
 
     @Test
     public void pseudonymizeSingleIdentifier() {
         String identifier = "Hello Data Privacy!";
-        String pseudonym = pseudonymization.pseudonymize(identifier, true);
+        String pseudonym = pseudonymizer.pseudonymize(identifier);
         assertEquals("ZTRmMjYyOTY3MmZlOfCfTky6D1AJ3cqHoniBnuf9X6NVU2d/ggRkTLzhlOryU+A=", pseudonym);
     }
 
     @Test
     public void pseudonymizeSingleIdentifierDeterministic() {
         String identifier = "Hello Data Privacy!";
-        String pseudonym1 = pseudonymization.pseudonymize(identifier, true);
-        String pseudonym2 = pseudonymization.pseudonymize(identifier, true);
+        String pseudonym1 = pseudonymizer.pseudonymize(identifier, true);
+        String pseudonym2 = pseudonymizer.pseudonymize(identifier, true);
         assertEquals(pseudonym1, pseudonym2);
     }
 
     @Test
     public void pseudonymizeSingleIdentifierNotDeterministic() {
         String identifier = "Hello Data Privacy!";
-        String pseudonym1 = pseudonymization.pseudonymize(identifier, false);
-        String pseudonym2 = pseudonymization.pseudonymize(identifier, false);
+        String pseudonym1 = pseudonymizer.pseudonymize(identifier, false);
+        String pseudonym2 = pseudonymizer.pseudonymize(identifier, false);
         assertNotEquals(pseudonym1, pseudonym2);
     }
 
+    @Test
+    public void pseudonymizeSingleIdentifierNoCaching() {
+        SecureConfig secureConfig = new SecureConfig(SECRET_KEY, NONCE_KEY, NONCE_BEGIN_POS, NONCE_END_POS);
+        pseudonymizer = new EncryptionPseudonymizer(secureConfig, false);
+
+        String identifier = "Hello Data Privacy!";
+        String pseudonym = pseudonymizer.pseudonymize(identifier, true);
+    }
 
     @Test
     public void pseudonymizeMultipleIdentifiers() {
         String[] identifiers = new String[] {"First One", "Second One", "Third One"};
-        String[] pseudonyms = pseudonymization.pseudonymize(identifiers, true);
+        String[] pseudonyms = pseudonymizer.pseudonymize(identifiers);
 
         assertTrue(pseudonyms.length == 3);
         assertEquals("ZGExZGUzNjk0MDFh/cl0508YKkW7Ox/B/5lRlsd1EvVyeIk0Iw==", pseudonyms[0]);
@@ -74,15 +69,16 @@ public class PseudonymizationTest {
     @Test
     public void pseudonymizeNULLIdentifier() {
         String identifier = null;
-        String pseudonym = pseudonymization.pseudonymize(identifier, true);
+        String pseudonym = pseudonymizer.pseudonymize(identifier);
         assertNull(pseudonym);
     }
 
     @Test
     public void pseudonymizeEmptyListOfIdentifiers() {
         String[] identifiers = new String[] {};
-        String[] pseudonyms = pseudonymization.pseudonymize(identifiers, true);
+        String[] pseudonyms = pseudonymizer.pseudonymize(identifiers);
 
         assertTrue(pseudonyms.length == 0);
     }
+
 }

@@ -11,23 +11,31 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PseudonymizerImpl implements Pseudonymizer {
+public class KeyedHashPseudonymizer implements Pseudonymizer {
     private static final Logger log = Logger.getLogger("Pseudonymizer.class");
 
     private static final Integer DEFAULT_CACHE_SIZE = 400000;
 
     private static final int NONCE_SIZE = 12;
     private Cache<String, String> cache = null;
+    private boolean cacheEnabled = false;
 
     private final SecureRandom random = new SecureRandom();
 
     private SecureConfig secureConfig;
 
-    public PseudonymizerImpl(SecureConfig secureConfig) {
-        this.cache = CacheBuilder.newBuilder()
+    public KeyedHashPseudonymizer(SecureConfig secureConfig) {
+        this(secureConfig, true);
+    }
+
+    public KeyedHashPseudonymizer(SecureConfig secureConfig, boolean enableCache) {
+        if (enableCache) {
+            this.cache = CacheBuilder.newBuilder()
                 .maximumSize(Optional.ofNullable(System.getenv("PSEUDONYMIZATION_CACHE_SIZE")).map(Integer::parseInt).orElse(DEFAULT_CACHE_SIZE))
                 .softValues()
                 .build();
+            this.cacheEnabled = true;
+        }
         this.secureConfig = secureConfig;
     }
 
@@ -42,11 +50,15 @@ public class PseudonymizerImpl implements Pseudonymizer {
         if (identifier != null) {
             try {
                 if (deterministic) {
-                    pseudonym = cache.getIfPresent(identifier);
+                    if (cacheEnabled) {
+                        pseudonym = cache.getIfPresent(identifier);
+                    }
                     if (pseudonym == null) {
                         HmacUtils hm = new HmacUtils();
                         pseudonym = hm.generateHmac256(identifier.getBytes(StandardCharsets.UTF_8), secureConfig.getSecretKeyDecoded());
-                        cache.put(identifier, pseudonym);
+                        if (cacheEnabled) {
+                            cache.put(identifier, pseudonym);
+                        }
                     }
                 } else {
                     HmacUtils hm = new HmacUtils();
@@ -62,7 +74,7 @@ public class PseudonymizerImpl implements Pseudonymizer {
                     pseudonym = hm.generateHmac256(nonceAndIdentifierEncoded, secureConfig.getSecretKeyDecoded());
                 }
             } catch (Exception e) {
-                log.log(Level.parse("SEVERE"), "Error during pseudonymisation, setting null as result: " + identifier + e);
+                log.severe("Error during pseudonymisation, setting null as result: " + identifier + " Exception = " + e);
             }
         }
         return pseudonym;
