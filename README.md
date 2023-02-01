@@ -12,6 +12,10 @@ Currently this library offers the following pseudonymization techniques:
  * keyed-hash based
  * encryption based
 
+Planned to add
+ 
+ * format-preserving encryption based
+
 ## Quick Start
 
 ### Maven configuration
