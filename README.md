@@ -28,6 +28,8 @@ Add the Maven dependency
 
 ### Using the Pseudonymization service
 
+#### Encryption based Pseudonymization
+
 ```java
 private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";
 private static final String NONCE_KEY = "2hfbSR4JxbE=";
@@ -36,5 +38,20 @@ private static final Integer NONCE_END_POS = 21;
 
 SecureConfig secureConfig = new SecureConfig(SECRET_KEY, NONCE_KEY, NONCE_BEGIN_POS, NONCE_END_POS);
 
-pseudonymizer = new PseudonymizerImpl(secureConfig);
+Pseudonymizer pseudonymizer = new EncryptionPseudonymizer(secureConfig);
 ```
+
+
+#### Key-Hash based Pseudonymization
+
+```java
+private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";
+
+SecureConfig secureConfig = new SecureConfig(SECRET_KEY);
+
+Pseudonymizer = new KeyedHashPseudonymizer(secureConfig);
+```
+
+
+
+
