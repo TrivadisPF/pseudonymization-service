@@ -1,13 +1,8 @@
 package com.trivadis.dataplatform.privacy.utils;
 
-import com.trivadis.dataplatform.privacy.utils.HmacUtils;
 import org.junit.jupiter.api.Test;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 

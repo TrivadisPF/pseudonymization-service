@@ -6,7 +6,7 @@ import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.ser
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReidentificationEncyptionPseudonymizerTest {
     private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";

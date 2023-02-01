@@ -8,7 +8,6 @@ import com.trivadis.dataplatform.privacy.utils.HmacUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class KeyedHashPseudonymizer implements Pseudonymizer {

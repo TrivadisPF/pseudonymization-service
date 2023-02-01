@@ -9,7 +9,6 @@ import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.ser
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EncryptionPseudonymizer implements Pseudonymizer, Reidentifier {
