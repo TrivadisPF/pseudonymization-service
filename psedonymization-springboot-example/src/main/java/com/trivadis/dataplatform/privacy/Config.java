@@ -1,7 +1,7 @@
 package com.trivadis.dataplatform.privacy;
 
 import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.PseudonymizerImpl;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.EncryptionPseudonymizer;
 import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.SecureConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class Config {
     @Bean
     public Pseudonymizer getPseudonymizer() {
         SecureConfig secureConfig = new SecureConfig(secretKey, nonceKey, nonceBeginPos, nonceEndPos);
-        return new PseudonymizerImpl(secureConfig);
+        return new EncryptionPseudonymizer(secureConfig);
     }
 
 }
