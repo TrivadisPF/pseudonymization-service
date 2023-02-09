@@ -3,7 +3,7 @@ package com.trivadis.dataplatform.privacy;
 import com.google.common.base.Strings;
 import com.trivadis.dataplatform.privacy.persistence.PseudonymizerRepository;
 import com.trivadis.dataplatform.privacy.persistence.PseudonymizerResultDto;
-import com.trivadis.dataplatform.privacy.service.Pseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.Pseudonymizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;

@@ -1,4 +1,4 @@
-package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service;
+package com.trivadis.dataplatform.privacy.pseudonymization.service;
 
 public interface Reidentifier {
     public String reidentify (String pseudonym);

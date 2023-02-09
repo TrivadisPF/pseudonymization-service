@@ -1,9 +1,9 @@
-import logging
-import sys
+import argparse
 import base64
 import json
+import logging
 import random
-import argparse
+import sys
 
 #Setup logging
 logger = logging.getLogger(__name__)

@@ -1,6 +1,6 @@
 package com.trivadis.dataplatform.privacy;
 
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.Pseudonymizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

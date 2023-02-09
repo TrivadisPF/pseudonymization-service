@@ -1,4 +1,4 @@
-package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.keyedhash;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.keyedhash;
 
 import java.util.Base64;
 

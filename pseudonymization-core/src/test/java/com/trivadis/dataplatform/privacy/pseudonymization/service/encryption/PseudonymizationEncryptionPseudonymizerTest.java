@@ -1,8 +1,6 @@
 package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption;
 
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.EncryptionPseudonymizer;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption.SecureConfig;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.Pseudonymizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

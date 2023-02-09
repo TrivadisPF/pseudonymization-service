@@ -1,8 +1,8 @@
-package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.keyedhash;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.keyedhash;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.Pseudonymizer;
 import com.trivadis.dataplatform.privacy.utils.HmacUtils;
 
 import java.nio.charset.StandardCharsets;

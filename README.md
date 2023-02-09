@@ -32,7 +32,11 @@ Add the Maven dependency
 
 ### Using the Pseudonymization service
 
+There are two classes, one for each pseudonymization technique. Upon instantiation, the parameters such as secret key(s) need to be passed using the `SecureConfig` class.
+
 #### Encryption based Pseudonymization
+
+Encryption based Pseudonymization technique needs a secret key (256bit) and a nonce key (64bit). 
 
 ```java
 private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";
@@ -46,7 +50,9 @@ Pseudonymizer pseudonymizer = new EncryptionPseudonymizer(secureConfig);
 ```
 
 
-#### Key-Hash based Pseudonymization
+#### Keyed-Hash based Pseudonymization
+
+The Keed-Hash based Pseudonymization technique needs just a secret key (256bit). 
 
 ```java
 private static final String SECRET_KEY = "eHkCnEhjfzsAHzNXCTGHaImv514CqfcPpoCgb2c0iuY=";
@@ -56,6 +62,7 @@ SecureConfig secureConfig = new SecureConfig(SECRET_KEY);
 Pseudonymizer = new KeyedHashPseudonymizer(secureConfig);
 ```
 
+#### Using it from Spring Boot
 
 
 

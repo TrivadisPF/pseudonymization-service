@@ -1,10 +1,10 @@
-package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.encryption;
+package com.trivadis.dataplatform.privacy.pseudonymization.service.encryption;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.trivadis.dataplatform.privacy.aesgcmsiv.EncryptionAESGCMSIV;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Pseudonymizer;
-import com.trivadis.dataplatform.privacy.pseudonymization.service.encryption.service.Reidentifier;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.Pseudonymizer;
+import com.trivadis.dataplatform.privacy.pseudonymization.service.Reidentifier;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
